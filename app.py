@@ -4,9 +4,11 @@ import pandas as pd
 import pandas_datareader.data as pdr
 import datetime
 import flask_login
-import smtplib
-from email.message import EmailMessage
 import threading
+from send_mail import send_mail
+from get_trend import get_trend, markets, markets_pro, data, data_pro
+from models import Markets, MarketsPro
+
 
 
 
@@ -21,7 +23,7 @@ db = SQLAlchemy(app)
 login_manager = flask_login.LoginManager()
 login_manager.init_app(app)
 
-data = {'name': {'password': 'password'}}
+logins = {'name': {'password': 'password'}}
 
 class User(flask_login.UserMixin):
     pass
@@ -29,7 +31,7 @@ class User(flask_login.UserMixin):
 
 @login_manager.user_loader
 def user_loader(name):
-    if name not in data:
+    if name not in logins:
         return
 
     user = User()
@@ -40,50 +42,15 @@ def user_loader(name):
 @login_manager.request_loader
 def request_loader(request):
     name = request.form.get('name')
-    if name not in data:
+    if name not in logins:
         return
 
     user = User()
     user.id = name
 
-    user.is_authenticated = request.form['password'] == data[name]['password']
+    user.is_authenticated = request.form['password'] == logins[name]['password']
 
     return user
-
-
-class Markets(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    symbol = db.Column(db.String(20))
-    trend = db.Column(db.String(20))
-
-class MarketsPro(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20))
-    symbol = db.Column(db.String(20))
-    trend = db.Column(db.String(20))
-
-
-def get_trend(symbol, start = datetime.datetime(2020, 1, 1), end = datetime.datetime.now()):
-    df = pdr.DataReader(symbol, 'fred', start, end)
-    if df[symbol][-1] > df[symbol][-252]:
-        return 'BULLISH'
-    else:
-        return 'BEARISH'
-
-def send_mail(name, email):
-    message = "Thank you" + " " + name.capitalize() + " " + "for registration. You can now login with the Trend Follower - name: name and password: password."
-    msg = EmailMessage()
-    msg['Subject'] = 'Registration'
-    msg['From'] = 'Trend Follower'
-    msg['To'] = email
-    msg.set_content(message)   
-
-
-
-    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
-        smtp.login('example@gmail.com', 'password')
-        smtp.send_message(msg)
 
 
 @app.route('/')
@@ -95,17 +62,12 @@ def index_get():
 @flask_login.login_required
 def pro_get():
     all_markets = MarketsPro.query.order_by(MarketsPro.name).all()
-    return render_template('pro.html',all_markets=all_markets,  data=[{'name':'S&P 500'}, {'name':'NASDAQ'}, {'name':'DOW JONES'}, {'name':'NIKKEI'}, {'name':'GOLD'}, {'name':'SILVER'}, {'name':'BITCOIN'}, {'name':'LITECOIN'}, {'name':'ETHEREUM'}, {'name':'US DOLLAR'}, {'name':'JP YEN'}, {'name':'CH FRANC'}, {'name':'CA DOLLAR'}] )
+    return render_template('pro.html',all_markets=all_markets,  data_pro=[{'name':'S&P 500'}, {'name':'NASDAQ'}, {'name':'DOW JONES'}, {'name':'NIKKEI'}, {'name':'GOLD'}, {'name':'SILVER'}, {'name':'BITCOIN'}, {'name':'LITECOIN'}, {'name':'ETHEREUM'}, {'name':'US DOLLAR'}, {'name':'JP YEN'}, {'name':'CH FRANC'}, {'name':'CA DOLLAR'}] )
 
 @app.route('/', methods=['POST'])
 def index_post():
     err_msg = ''
     new_market = request.form.get('market')
-    markets = {
-    'S&P 500' : 'SP500',
-    'GOLD' : 'GOLDAMGBD228NLBM',
-    'BITCOIN' : 'CBBTCUSD'
-    }   
     if new_market:
         existing_market = Markets.query.filter_by(name=new_market).first()
         if not existing_market:
@@ -128,25 +90,10 @@ def index_post():
 def pro_post():
     err_msg = ''
     new_market = request.form.get('market')
-    markets = {
-    'S&P 500' : 'SP500',
-    'DOW JONES' : 'DJIA',
-    'NASDAQ' : 'NASDAQ100',
-    'NIKKEI' : 'NIKKEI225',
-    'GOLD' : 'GOLDAMGBD228NLBM',
-    'SILVER' : 'SLVPRUSD',
-    'US DOLLAR' : 'DTWEXBGS',
-    'JP YEN' : 'DEXJPUS',
-    'CH FRANC' : 'DEXSZUS',
-    'CA DOLLAR' : 'DEXCAUS',
-    'BITCOIN' : 'CBBTCUSD',
-    'LITECOIN' : 'CBLTCUSD',
-    'ETHEREUM' : 'CBETHUSD'
-    }   
     if new_market:
         existing_market = MarketsPro.query.filter_by(name=new_market).first()
         if not existing_market:
-            symbol = markets[new_market]
+            symbol = markets_pro[new_market]
             new_trend = get_trend(symbol)
             data = MarketsPro(name=new_market, symbol=symbol, trend=new_trend)
             db.session.add(data)
@@ -248,4 +195,4 @@ def internal_server_error(e):
 
     
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
