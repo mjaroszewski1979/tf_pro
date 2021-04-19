@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %} Pro {% endblock %}
+
+{% block content %}
+<table class="select">
+    <tr>
+      <td>
+        <form class="form-inline" method="POST" action="{{ url_for('pro_post') }}">
+          <div>
+            <div class="input-group">
+                <span class="input-group-addon">SELECT YOUR MARKET:</span>
+                    <select name="market" id='selection' class="selectpicker form-control">
+                      {% for o in data %}
+                      <option value="{{ o.name }}" id="option">{{ o.name }}</option>
+                      {% endfor %}
+                    </select>
+            </div>
+            <button type="submit" class="button-left" id="btn-sel">SEND</button>
+          </div>
+        </form>
+      </td>
+    </tr>
+  </table>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+        <div class="msg_display">
+          <p> {{ message }} </p>
+          <form action="{{ url_for('pro_get') }}">
+            <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+          </form>
+        </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="table">
+      <table>
+        <tr>
+          <td>MARKET</td>
+          <td>TREND</td>
+          <td>ACTION</td>
+        </tr>
+      </table>
+      {% for market in all_markets %}
+      <table>
+        <tr>
+          <td>{{ market.name }}</td>
+          {% if market.trend == 'BULLISH' %}
+          <td><i class="fas fa-arrow-circle-up"></i> {{ market.trend }}</td>
+          {% else %}
+          <td><i class="fas fa-arrow-circle-down"></i> {{ market.trend }}</td>
+          {% endif %}
+          <td class="buttons"><button class="button-left"><a href='/update_pro/{{market.id}}'>UPDATE</a></button><button class="button-right"><a href='/delete_pro/{{market.id}}'>DELETE</a></button></td>
+        </tr>
+      </table>
+      {% endfor %}
+    </div>
+{% endblock content %}

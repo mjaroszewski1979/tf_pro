@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Unauthorized {% endblock %}
+
+{% block content %}
+
+        <div class="msg_display">
+          <h4>PLEASE GO TO <a href="{{ url_for('login') }}">LOGIN</a> FIRST!</h4>
+          <form action="{{ url_for('index_get') }}">
+            <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+          </form>
+        </div>
+
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Internal Server Error {% endblock %}
+
+{% block content %}
+
+        <div class="msg_display">
+          <h4>AN ERROR HAS OCCURED AND WE'RE WORKING TO FIX THE PROBLEM. WE WILL BE UP AND RUNNING SHORTLY.</h4>
+          <form action="{{ url_for('index_get') }}">
+            <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+          </form>
+        </div>
+
+{% endblock content %}

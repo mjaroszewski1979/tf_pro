@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Page Not Found {% endblock %}
+
+{% block content %}
+
+        <div class="msg_display">
+          <h4>SORRY, WE CAN'T FIND THE WEBSITE YOU WERE LOOKING FOR. PLEASE GO BACK TO THE <a href="{{ url_for('index_get') }}">HOMEPAGE.</a></h4>
+          <form action="{{ url_for('index_get') }}">
+            <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+          </form>
+        </div>
+
+{% endblock content %}

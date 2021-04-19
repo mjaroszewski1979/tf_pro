@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %} Logout {% endblock %}
+
+{% block content %}
+
+        <div class="msg_display">
+          <h4>YOU HAVE BEEN LOGGED OUT!</h4>
+          <form action="{{ url_for('index_get') }}">
+            <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+          </form>
+        </div>
+
+{% endblock content %}

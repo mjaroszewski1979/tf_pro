@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %} Login {% endblock %}
+
+{% block content %}
+
+<div class="login_display">
+    <form action="{{ url_for('login') }}", method='POST'>
+        <div class="form__control">
+            <input type="text" name="name" placeholder="PLEASE ENTER NAME" required>
+        </div>
+        <div class="form__control">
+            <input type="text" name="password" placeholder="PLEASE ENTER PASSWORD" required>
+        </div>
+        <div class="form__control">
+            <input type="submit" value="LOGIN" class="button-left" id="btn-sel">
+        </div>
+    </form>
+</div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+    <div class="msg_logout">
+      <p> {{ message }} </p>
+      <form action="{{ url_for('login') }}">
+        <button id="btn-msg"><i class="fas fa-times-circle"></i></button>
+      </form>
+    </div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endblock content %}

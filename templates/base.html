@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../static/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../static/images/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+    <link href="../static/style.css" rel="stylesheet">
+    <title>{% block title %}{% endblock %} - Trend Follower</title>
+</head>
+<div class="container">
+  <body>
+    <video playsinline autoplay muted loop poster="../static/images/bitcoin.png" id="bgvid">
+      <source src="../static/images/money_vid.webm" type="video/webm">
+      <source src="../static/images/money_vid.mp4" type="video/mp4">
+    </video>
+    <header>
+      <h1 class="logo"><i class="fas fa-globe"></i> TREND FOLLOWER </h1>
+      <nav>
+        <ul class="nav__links">
+          {% if not current_user.is_authenticated %}
+          <li><a href="{{ url_for('index_get') }}">HOME</a></li>
+          <li><a href="{{ url_for('login') }}">LOGIN</a></li>
+          <li><a href="{{ url_for('register') }}">REGISTER</a></li>
+          {% endif %}
+          {% if current_user.is_authenticated %}
+          <li><a href="{{ url_for('index_get') }}">HOME</a></li>
+          <li><a href="{{ url_for('logout') }}">LOGOUT</a></li>
+          <li><a href="{{ url_for('pro_get') }}">PRO</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+    <main>
+        {% block content %} {% endblock %}
+    </main>
+      <footer>
+        <div class="social">
+          <a href="http://mjaroszewski.pythonanywhere.com/strategies" target="_blank"><i class="fas fa-chart-line"></i></a>
+          <a href="https://www.trendfollowing.com/" target="_blank"><i class="fas fa-info-circle"></i></a>
+          <a href="https://alvarezquanttrading.com/" target="_blank"><i class="far fa-lightbulb"></i></a>
+          <a href="https://quantpedia.com/" target="_blank"><i class="fas fa-map"></i></a>
+        </div>
+      </footer>
+  </body>
+</div>
+</html>
