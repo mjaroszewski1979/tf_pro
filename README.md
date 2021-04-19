@@ -5,7 +5,7 @@
 ### Features
 * Fully responsive navigation menu &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/tablet.png">
 * Embedded Font Awesome icon collection 
-* Implementing techniqes of inserting videos in an HTML document such as the new HTML5 video tag &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/video.png">
+* Implementing techniques of inserting videos in an HTML document such as the new HTML5 video tag &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/video.png">
 * CSS Flexbox applied to simplify complex layout design
 * Advanced HTML and CSS minification process aims to reduce webpage loading speed &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/speed.png">
 * CSS custom properties for fast and forward-looking design 
