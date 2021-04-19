@@ -1,13 +1,14 @@
 ## <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/bulb.png">  &nbsp; Trend Follower
-### This is a Flask application powered by Python's Smtplib built-in module for sending emails as well as Flask-Login to provide user session management.
+### This is a Python application powered by Flask-Login to provide user session management. Its main function is to present current direction for selected financial market. After completing the registration process users are gaining access to multiple instruments. This website is using pandas-datareader to fetch historical data from FRED. Before results are being displayed application is calculating very simple 12-month momentum formula to determine actual trend.
 --------------------------------------------------
 
 ### Features
 * Fully responsive navigation menu  &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/tablet.png">
 * CSS custom properties for fast and forward-looking design 
-* Embedded Font Awesome icon collection 
 * Advanced HTML and CSS minification process aims to reduce webpage loading speed &nbsp; <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/speed.png">
+* Embedded Font Awesome icon collection 
 * CSS Flexbox applied to simplify complex layout design
+* 
 
 -------------------------------------------------
 
