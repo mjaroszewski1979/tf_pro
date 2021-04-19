@@ -1,4 +1,4 @@
-## <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/bulb.png">  &nbsp; Trend Follower
+## <img src="https://github.com/mjaroszewski1979/mjaroszewski1979/blob/main/trend.png">  &nbsp; Trend Follower
 ### This is a Python application powered by Flask-Login to provide user session management. Its main function is to present current direction for selected financial markets. After completing the registration process users are gaining access to multiple instruments. This website is using pandas-datareader to fetch historical data from FRED. Before results are being displayed application is calculating very simple 12-month momentum formula to determine actual trend.
 --------------------------------------------------
 
